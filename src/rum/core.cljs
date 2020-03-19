@@ -57,7 +57,7 @@
         prototype      (gobj/get ctor "prototype")]
 
     (when-not (empty? will-mount)
-      (gobj/set prototype "componentWillMount"
+      (gobj/set prototype "UNSAFE_componentWillMount"
         (fn []
           (this-as this
             (vswap! (state this) call-all will-mount)))))
@@ -68,7 +68,7 @@
           (this-as this
             (vswap! (state this) call-all did-mount)))))
 
-    (gobj/set prototype "componentWillReceiveProps"
+    (gobj/set prototype "UNSAFE_componentWillReceiveProps"
       (fn [next-props]
         (this-as this
           (let [old-state  @(state this)
@@ -87,7 +87,7 @@
                 (or (some #(% old-state new-state) should-update) false))))))
     
     (when-not (empty? will-update)
-      (gobj/set prototype "componentWillUpdate"
+      (gobj/set prototype "UNSAFE_componentWillUpdate"
         (fn [_ next-state]
           (this-as this
             (let [new-state (gobj/get next-state ":rum/state")]
